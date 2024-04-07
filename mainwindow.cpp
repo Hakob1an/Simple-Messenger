@@ -5,14 +5,6 @@ MainWindow::MainWindow(QString username, QWidget *parent)
     : QMainWindow(parent)
     , _client(new Client(username, this))
 {
-    _chatContainer = new QWidget;
-    _chatLayout = new QVBoxLayout(_chatContainer);
-
-    _chatScrollArea = new QScrollArea;
-    _chatScrollArea->setWidgetResizable(true);
-    _chatScrollArea->setWidget(_chatContainer);
-    setCentralWidget(_chatScrollArea);
-
     _chatDisplay = new QTextEdit;
     _chatDisplay->setReadOnly(true);
     _chatDisplay->setStyleSheet("QTextEdit {"
@@ -78,65 +70,40 @@ MainWindow::MainWindow(QString username, QWidget *parent)
 MainWindow::~MainWindow()
 {}
 
-//void MainWindow::onReceivedMessage(const QString &sender, const QString &message)
-//{
-//    QTextCursor cursor(_chatDisplay->document());
-//    cursor.movePosition(QTextCursor::End);
-
-//    QTextBlockFormat format;
-//    format.setAlignment(Qt::AlignLeft);
-//    cursor.insertBlock(format);
-
-//    QString formattedMessage = QString("<b>%1:</b> %2<br>").arg(sender.toHtmlEscaped(), message.toHtmlEscaped());
-//    cursor.insertHtml(formattedMessage);
-//    _chatDisplay->ensureCursorVisible();
-//}
-
-//void MainWindow::onSendClicked()
-//{
-//    QString message = _messageInput->text().toHtmlEscaped();
-
-//    if (!message.isEmpty()) {
-//        QTextCursor cursor(_chatDisplay->document());
-//        cursor.movePosition(QTextCursor::End);
-
-//        QTextBlockFormat format;
-//        format.setAlignment(Qt::AlignRight);
-//        cursor.insertBlock(format);
-
-//        QString formattedMessage = QString("<b>Me:</b> %1<br>").arg(message);
-//        cursor.insertHtml(formattedMessage);
-//        _chatDisplay->ensureCursorVisible();
-
-//        _client->sendMessage(message);
-//        _messageInput->clear();
-//    }
-//}
-
 void MainWindow::onReceivedMessage(const QString &sender, const QString &message)
 {
-    MessageBubble *bubble = new MessageBubble(_chatContainer);
-    bubble->setText(QString("%1: %2").arg(sender, message));
+    QTextCursor cursor(_chatDisplay->document());
+    cursor.movePosition(QTextCursor::End);
 
-    _chatLayout->addWidget(bubble);
-    _chatScrollArea->verticalScrollBar()->setValue(_chatScrollArea->verticalScrollBar()->maximum());
+    QTextBlockFormat format;
+    format.setAlignment(Qt::AlignLeft);
+    cursor.insertBlock(format);
+
+    QString formattedMessage = QString("<b>%1:</b> %2<br>").arg(sender.toHtmlEscaped(), message.toHtmlEscaped());
+    cursor.insertHtml(formattedMessage);
+    _chatDisplay->ensureCursorVisible();
 }
 
 void MainWindow::onSendClicked()
 {
-    QString message = _messageInput->text();
-    if (!message.isEmpty()) {
-        MessageBubble *bubble = new MessageBubble(_chatContainer);
-        bubble->setText(QString("Me: %1").arg(message));
+    QString message = _messageInput->text().toHtmlEscaped();
 
-        _chatLayout->addWidget(bubble);
-        _chatScrollArea->verticalScrollBar()->setValue(_chatScrollArea->verticalScrollBar()->maximum());
+    if (!message.isEmpty()) {
+        QTextCursor cursor(_chatDisplay->document());
+        cursor.movePosition(QTextCursor::End);
+
+        QTextBlockFormat format;
+        format.setAlignment(Qt::AlignRight);
+        cursor.insertBlock(format);
+
+        QString formattedMessage = QString("<b>Me:</b> %1<br>").arg(message);
+        cursor.insertHtml(formattedMessage);
+        _chatDisplay->ensureCursorVisible();
 
         _client->sendMessage(message);
         _messageInput->clear();
     }
 }
-
 
 void MainWindow::onLoginSuccess(const User& user)
 {

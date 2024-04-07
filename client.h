@@ -18,9 +18,6 @@ public:
     void setUsername(QString username) { _username = username; }
     void onConnected();
 
-public slots:
-    void handleSslErrors(const QList<QSslError> &errors);
-
 signals:
     void receivedMessage(const QString &sender, const QString &message);
 
@@ -30,7 +27,8 @@ private slots:
 private:
     QString _username;
     QTcpSocket *_socket;
-    QSslSocket* _sslSocket;
+
+//    QByteArray generateRandomKey();
 
 public:
     bool _usernameSent;

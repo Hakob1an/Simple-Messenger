@@ -3,7 +3,6 @@
 
 #include "client.h"
 #include "loginmanager.h"
-#include "messagebubble.h"
 #include <QMainWindow>
 #include <QTextEdit>
 #include <QLineEdit>
@@ -42,8 +41,5 @@ private:
     QTextEdit *_chatDisplay;
     QLineEdit *_messageInput;
     QPushButton *_sendButton;
-    QVBoxLayout *_chatLayout;  // Holds message bubbles
-    QWidget *_chatContainer;   // Container for the layout
-    QScrollArea *_chatScrollArea;  // Allows scrolling through messages
 };
 #endif // MAINWINDOW_H

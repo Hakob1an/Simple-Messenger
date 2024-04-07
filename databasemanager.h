@@ -13,7 +13,7 @@ struct ChatMessage {
     QString sender;
     QString recipient;
     QString message;
-    QDateTime timestamp; // Assuming you might also want to display or use the timestamp
+    QDateTime timestamp;
 };
 
 class DatabaseManager

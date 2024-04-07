@@ -45,3 +45,10 @@ void Client::onReadyRead()
     QString message(data);
     emit receivedMessage(sender, message);
 }
+
+//QByteArray Client::generateRandomKey() {
+//    QByteArray key;
+//    key.resize(32); //cuz i use AES-256
+//    RAND_bytes(reinterpret_cast<unsigned char*>(key.data()), key.size());
+//    return key;
+//}

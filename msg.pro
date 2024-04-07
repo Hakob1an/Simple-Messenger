@@ -21,6 +21,7 @@ TEMPLATE = app
 
 SOURCES += \
     client.cpp \
+    crypto.cpp \
     databasemanager.cpp \
     logindialog.cpp \
     loginmanager.cpp \
@@ -31,6 +32,7 @@ SOURCES += \
 
 HEADERS += \
     client.h \
+    crypto.h \
     databasemanager.h \
     logindialog.h \
     loginmanager.h \
@@ -50,4 +52,6 @@ QT += sql
 
 LIBS += -L/usr/include/openssl -lssl -lcrypto
 INCLUDEPATH += /usr/include/openssl
+LIBS += -lssl -lcrypto
+
 
